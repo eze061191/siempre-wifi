@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo Guardar las Imágenes - Siempre WiFi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #F78700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .step {
+            background: #f9fafb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #F78700;
+        }
+        .step h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        .step-number {
+            display: inline-block;
+            background: #F78700;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        code {
+            background: #e5e7eb;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        ul {
+            line-height: 1.8;
+        }
+        .folder-path {
+            background: #1f2937;
+            color: #10b981;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📸 Cómo Guardar las Imágenes</h1>
+        
+        <div class="warning">
+            <strong>⚠️ Importante:</strong> Las imágenes que compartiste en el chat necesitan ser guardadas manualmente en tu computadora.
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">1</span>Vuelve al Chat</h2>
+            <p>Regresa a la conversación donde compartiste las dos imágenes de Siempre WiFi.</p>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">2</span>Descarga la Primera Imagen</h2>
+            <ul>
+                <li>Busca la imagen de <strong>"5 amigos conectados a un wifi"</strong></li>
+                <li>Haz <strong>clic derecho</strong> sobre la imagen</li>
+                <li>Selecciona <strong>"Guardar imagen como..."</strong></li>
+                <li>Guárdala con el nombre: <code>hero-amigos-wifi.jpg</code></li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">3</span>Descarga la Segunda Imagen</h2>
+            <ul>
+                <li>Busca la imagen de <strong>"Conectividad global al alcance de tu mano"</strong></li>
+                <li>Haz <strong>clic derecho</strong> sobre la imagen</li>
+                <li>Selecciona <strong>"Guardar imagen como..."</strong></li>
+                <li>Guárdala con el nombre: <code>conectividad-global.jpg</code></li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">4</span>Copia las Imágenes a la Carpeta del Proyecto</h2>
+            <p>Copia ambas imágenes a esta ubicación:</p>
+            <div class="folder-path">
+                C:\Users\Usuario\CascadeProjects\siempre-wifi\public\images\
+            </div>
+            <p><strong>Métodos para copiar:</strong></p>
+            <ul>
+                <li><strong>Opción A:</strong> Arrastra y suelta las imágenes desde tu carpeta de Descargas</li>
+                <li><strong>Opción B:</strong> Copia (Ctrl+C) y pega (Ctrl+V) las imágenes en la carpeta</li>
+                <li><strong>Opción C:</strong> Usa el Explorador de Archivos para moverlas</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">5</span>Verifica los Nombres</h2>
+            <p>Asegúrate de que los archivos tengan exactamente estos nombres:</p>
+            <ul>
+                <li>✅ <code>hero-amigos-wifi.jpg</code></li>
+                <li>✅ <code>conectividad-global.jpg</code></li>
+            </ul>
+            <p><em>Los nombres deben ser exactos (incluyendo mayúsculas/minúsculas y guiones).</em></p>
+        </div>
+
+        <div class="success">
+            <strong>✅ ¡Listo!</strong> Una vez que las imágenes estén en la carpeta correcta, se mostrarán automáticamente en tu landing page React.
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">6</span>Refresca el Navegador</h2>
+            <p>Si el servidor de desarrollo está corriendo, simplemente refresca la página en tu navegador (F5 o Ctrl+R).</p>
+            <p>Si no está corriendo, ejecuta en la terminal:</p>
+            <div class="folder-path">
+                npm start
+            </div>
+        </div>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #e5e7eb;">
+
+        <h2 style="color: #F78700;">🎯 Ubicación de las Imágenes en la Landing</h2>
+        <ul>
+            <li><strong>Imagen 1 (5 amigos):</strong> Sección Hero - Parte superior de la página</li>
+            <li><strong>Imagen 2 (Conectividad global):</strong> Nueva sección "Feature Highlight" - Después de Beneficios</li>
+        </ul>
+
+        <div class="warning">
+            <strong>💡 Tip:</strong> Si las imágenes no aparecen inmediatamente, verifica la consola del navegador (F12) para ver si hay mensajes de error.
+        </div>
+    </div>
+</body>
+</html>
