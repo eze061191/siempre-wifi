@@ -3,23 +3,29 @@
   "version": "1.0.0",
   "description": "Landing page moderna y optimizada para conversión (CRO) del servicio de internet móvil \"Siempre WiFi\".",
   "main": "src/index.js",
+  "homepage": "https://eze061191.github.io/siempre-wifi",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^8.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^3.5.0"
   },
   "overrides": {
-    "ajv": "^8.12.0"
+    "ajv": "^8.12.0",
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.31"
   },
   "eslintConfig": {
     "extends": [
@@ -42,7 +48,7 @@
     "@types/node": "^16.18.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-    "postcss": "^8.5.6",
+    "gh-pages": "^6.3.0",
     "typescript": "^4.9.5"
   }
 }
