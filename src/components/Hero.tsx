@@ -11,6 +11,8 @@ function Hero() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [showSimModal, setShowSimModal] = useState(false);
+  const [simType, setSimType] = useState('');
 
   const destinations = [
     'Abu Dabi', 'África', 'Alaska', 'Albania', 'Alemania', 'América Central', 'América Latina',
@@ -391,6 +393,24 @@ function Hero() {
                           <div className="summary-content">
                             <div className="summary-header">
                               <span className="summary-title">Plan de {Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24))} días</span>
+                              <div className="sim-type-badges">
+                                <button 
+                                  className="sim-badge"
+                                  onClick={(e) => { e.stopPropagation(); setSimType('fisica'); setShowSimModal(true); }}
+                                  title="Información sobre SIM Física"
+                                >
+                                  <span className="badge-icon">📱</span>
+                                  <span className="badge-text">SIM Física</span>
+                                </button>
+                                <button 
+                                  className="sim-badge"
+                                  onClick={(e) => { e.stopPropagation(); setSimType('esim'); setShowSimModal(true); }}
+                                  title="Información sobre eSIM"
+                                >
+                                  <span className="badge-icon">📲</span>
+                                  <span className="badge-text">eSIM</span>
+                                </button>
+                              </div>
                             </div>
                             <div className="summary-dates">
                               <span className="summary-date">
@@ -454,6 +474,114 @@ function Hero() {
           </div>
         </div>
       </div>
+
+      {/* Modal de información SIM */}
+      {showSimModal && (
+        <div className="sim-modal-overlay" onClick={() => setShowSimModal(false)}>
+          <div className="sim-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="sim-modal-close" onClick={() => setShowSimModal(false)}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {simType === 'fisica' ? (
+              <>
+                <div className="sim-modal-header">
+                  <span className="sim-modal-icon">📱</span>
+                  <h3 className="sim-modal-title">SIM Física</h3>
+                </div>
+                <div className="sim-modal-body">
+                  <p className="sim-modal-description">
+                    Tarjeta SIM tradicional que se inserta físicamente en tu dispositivo móvil.
+                  </p>
+                  
+                  <div className="sim-modal-section">
+                    <h4 className="sim-section-title">✅ Ventajas</h4>
+                    <ul className="sim-modal-list">
+                      <li>Compatible con todos los dispositivos móviles</li>
+                      <li>Fácil de intercambiar entre dispositivos</li>
+                      <li>No requiere configuración técnica</li>
+                      <li>Ideal para dispositivos antiguos</li>
+                    </ul>
+                  </div>
+
+                  <div className="sim-modal-section">
+                    <h4 className="sim-section-title">📦 Entrega</h4>
+                    <ul className="sim-modal-list">
+                      <li>Envío a domicilio (3-5 días hábiles)</li>
+                      <li>Activación al insertar la tarjeta</li>
+                      <li>Incluye adaptadores para todos los tamaños</li>
+                    </ul>
+                  </div>
+
+                  <div className="sim-modal-section">
+                    <h4 className="sim-section-title">🔧 Cómo funciona</h4>
+                    <ol className="sim-modal-steps">
+                      <li>Recibe tu SIM por correo</li>
+                      <li>Inserta la tarjeta en tu dispositivo</li>
+                      <li>Enciende tu teléfono en el destino</li>
+                      <li>¡Listo! Conexión automática</li>
+                    </ol>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="sim-modal-header">
+                  <span className="sim-modal-icon">📲</span>
+                  <h3 className="sim-modal-title">eSIM (SIM Digital)</h3>
+                </div>
+                <div className="sim-modal-body">
+                  <p className="sim-modal-description">
+                    SIM digital integrada en tu dispositivo. Activación instantánea sin tarjeta física.
+                  </p>
+                  
+                  <div className="sim-modal-section">
+                    <h4 className="sim-section-title">✅ Ventajas</h4>
+                    <ul className="sim-modal-list">
+                      <li>Activación instantánea por email</li>
+                      <li>No necesitas esperar envío físico</li>
+                      <li>Perfecto para viajes de última hora</li>
+                      <li>Más ecológico (sin plástico)</li>
+                      <li>Mantén tu SIM principal activa</li>
+                    </ul>
+                  </div>
+
+                  <div className="sim-modal-section">
+                    <h4 className="sim-section-title">📱 Compatibilidad</h4>
+                    <ul className="sim-modal-list">
+                      <li>iPhone XS / XR o superior</li>
+                      <li>Samsung Galaxy S20 o superior</li>
+                      <li>Google Pixel 3 o superior</li>
+                      <li>Huawei P40 o superior</li>
+                    </ul>
+                    <p className="sim-modal-note">
+                      <strong>Nota:</strong> Verifica que tu dispositivo sea compatible con eSIM antes de comprar.
+                    </p>
+                  </div>
+
+                  <div className="sim-modal-section">
+                    <h4 className="sim-section-title">🔧 Cómo funciona</h4>
+                    <ol className="sim-modal-steps">
+                      <li>Recibe el código QR por email</li>
+                      <li>Escanea el QR desde tu dispositivo</li>
+                      <li>Activa la eSIM en configuración</li>
+                      <li>¡Listo! Conexión inmediata</li>
+                    </ol>
+                  </div>
+                </div>
+              </>
+            )}
+            
+            <div className="sim-modal-footer">
+              <button className="btn-modal-close" onClick={() => setShowSimModal(false)}>
+                Entendido
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
