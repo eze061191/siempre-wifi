@@ -13,6 +13,7 @@ function DestinationDetailPage({ destination = 'España', bookingData }: Destina
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [quantity, setQuantity] = useState<number>(1);
   const [basePrice, setBasePrice] = useState<number>(bookingData?.price || 0);
+  const [selectedSimType, setSelectedSimType] = useState<string>('esim');
 
   // Adjust image height to match right column
   useEffect(() => {
@@ -443,6 +444,13 @@ function DestinationDetailPage({ destination = 'España', bookingData }: Destina
                   <span className="total-label">Total</span>
                   <span className="total-price">${calculateTotalPrice()} USD</span>
                 </div>
+
+                {selectedSimType && (
+                  <div className="detail-sim-selection">
+                    <span className="sim-selection-icon">{selectedSimType === 'fisica' ? '📱' : '📲'}</span>
+                    <span className="sim-selection-text">{selectedSimType === 'fisica' ? 'SIM Física' : 'eSIM'}</span>
+                  </div>
+                )}
 
                 <button className="btn-buy-main">
                   Obtén internet ilimitado

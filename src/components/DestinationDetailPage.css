@@ -280,7 +280,7 @@
 }
 
 .selector-group {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .selector-label {
@@ -552,6 +552,31 @@
   color: #000000;
 }
 
+.detail-sim-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: #F0FDF4;
+  border: 1px solid #86EFAC;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.detail-sim-selection .sim-selection-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.detail-sim-selection .sim-selection-text {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #166534;
+  text-align: center;
+}
+
 .btn-buy-main {
   width: 100%;
   background: #F78700;
@@ -563,7 +588,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }
 
 .btn-buy-main:hover {

@@ -13,6 +13,7 @@ function Hero() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [showSimModal, setShowSimModal] = useState(false);
   const [simType, setSimType] = useState('');
+  const [selectedSimType, setSelectedSimType] = useState('');
 
   const destinations = [
     'Abu Dabi', 'África', 'Alaska', 'Albania', 'Alemania', 'América Central', 'América Latina',
@@ -54,24 +55,8 @@ function Hero() {
     'Yakarta', 'Yemen', 'Zambia'
   ];
 
-  // Close calendar when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (showCalendar) {
-        const calendarElement = document.querySelector('.calendar-dropdown');
-        const inputElement = event.target.closest('.input-group-wrapper');
-        
-        if (calendarElement && !calendarElement.contains(event.target) && !inputElement) {
-          setShowCalendar(false);
-        }
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showCalendar]);
+  // Calendar persistence - only closes with X button
+  // useEffect removed to maintain calendar open when clicking outside
 
   const handleSearchChange = (e) => {
     const query = e.target.value;
@@ -262,7 +247,7 @@ function Hero() {
                   )}
                 </div>
                 <div className="input-group-wrapper">
-                  <div className="input-group" onClick={() => setShowCalendar(!showCalendar)}>
+                  <div className="input-group" onClick={() => setShowCalendar(true)}>
                     <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
                       <path d="M6 2V5M14 2V5M3 8H17M4 4H16C16.5523 4 17 4.44772 17 5V17C17 17.5523 16.5523 18 16 18H4C3.44772 18 3 17.5523 3 17V5C3 4.44772 3.44772 4 4 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
@@ -280,7 +265,23 @@ function Hero() {
                     </div>
                   </div>
                   {showCalendar && (
-                    <div className="calendar-dropdown" onMouseDown={(e) => e.preventDefault()}>
+                    <div 
+                      className="calendar-dropdown" 
+                      onClick={(e) => e.stopPropagation()}
+                      onMouseDown={(e) => e.stopPropagation()}
+                    >
+                      <button 
+                        className="calendar-close-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowCalendar(false);
+                        }}
+                        title="Cerrar calendario"
+                      >
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M15 5L5 15M5 5l10 10" />
+                        </svg>
+                      </button>
                       <h4 className="calendar-title">Elige la fecha de tu plan</h4>
                       <div className="calendar-info">
                         <span className="info-icon">⚠️</span>
@@ -430,6 +431,12 @@ function Hero() {
                               })()} USD</span>
                               <span className="price-detail">${15}/día</span>
                             </div>
+                            {selectedSimType && (
+                              <div className="summary-sim-selection">
+                                <span className="sim-selection-icon">{selectedSimType === 'fisica' ? '📱' : '📲'}</span>
+                                <span className="sim-selection-text">{selectedSimType === 'fisica' ? 'SIM Física' : 'eSIM'}</span>
+                              </div>
+                            )}
                           </div>
                           <button className="btn-apply-animated" onClick={() => {
                             const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
@@ -575,8 +582,17 @@ function Hero() {
             )}
             
             <div className="sim-modal-footer">
+              <button 
+                className="btn-modal-select" 
+                onClick={() => {
+                  setSelectedSimType(simType);
+                  setShowSimModal(false);
+                }}
+              >
+                Seleccionar {simType === 'fisica' ? 'SIM Física' : 'eSIM'}
+              </button>
               <button className="btn-modal-close" onClick={() => setShowSimModal(false)}>
-                Entendido
+                Cerrar
               </button>
             </div>
           </div>
