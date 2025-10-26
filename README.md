@@ -7,6 +7,8 @@ Landing page moderna y optimizada para conversión (CRO) del servicio de interne
 
 **🌐 Demo en vivo**: [https://siempre-wifi.vercel.app](https://siempre-wifi.vercel.app)
 
+> **📝 Nota:** El chatbot con IA está temporalmente desactivado. Para restaurarlo, consulta [CHATBOT-RESTAURAR.md](./CHATBOT-RESTAURAR.md)
+
 ---
 
 ## ⚛️ Proyecto React
