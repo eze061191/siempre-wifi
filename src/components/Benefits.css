@@ -1,73 +1,97 @@
 /* ===== BENEFITS SECTION ===== */
 .benefits {
   padding: 80px 0;
-  background: #FFFFFF;
+  background: #F9FAFB;
   border-top: none;
 }
 
-.section-header {
+.benefits .section-header {
   text-align: center;
   margin-bottom: 4rem;
 }
 
-.section-header h2 {
-  font-size: 2.5rem;
-  font-weight: 800;
+.benefits .section-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
   margin-bottom: 1rem;
   color: #000000;
 }
 
-.section-header p {
-  font-size: 1.125rem;
-  color: #4B5563;
+.benefits .section-header p {
+  font-size: 1rem;
+  color: #6B7280;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .benefit-card {
   padding: 2.5rem 2rem;
-  border-radius: 16px;
+  border-radius: 12px;
   background: #FFFFFF;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid #E5E7EB;
   opacity: 0;
   transform: translateY(20px);
   text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .benefit-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   border-color: #F78700;
 }
 
-.benefit-icon {
-  width: 80px;
-  height: 80px;
-  background: #F78700;
-  color: #FFFFFF;
+/* Círculo con icono SVG - similar a HowItWorks */
+.benefit-icon-circle {
+  width: 70px;
+  height: 70px;
+  background: #FFFFFF;
+  border: 2px solid #F78700;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 1.5rem;
-  font-size: 2.5rem;
-  box-shadow: 0 4px 20px rgba(247, 135, 0, 0.25);
+  color: #F78700;
+  transition: all 0.3s ease;
+}
+
+.benefit-icon-circle svg {
+  width: 32px;
+  height: 32px;
+  stroke: #F78700;
+}
+
+.benefit-card:hover .benefit-icon-circle {
+  background: #F78700;
+  transform: scale(1.05);
+}
+
+.benefit-card:hover .benefit-icon-circle svg {
+  stroke: #FFFFFF;
 }
 
 .benefit-card h3 {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
   color: #000000;
+  line-height: 1.4;
 }
 
 .benefit-card p {
-  color: #4B5563;
+  font-size: 0.9375rem;
+  color: #6B7280;
   line-height: 1.6;
 }
 

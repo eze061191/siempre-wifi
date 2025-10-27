@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './StyleGuide.css';
 import Navbar from './Navbar';
 import FAQ from './FAQ';
+import HowItWorks from './HowItWorks';
 
 function StyleGuide() {
   const [copiedColor, setCopiedColor] = useState('');
@@ -331,6 +332,58 @@ function MyPage() {
     </div>
   );
 }`}
+            </pre>
+          </div>
+        </section>
+
+        {/* HowItWorks Component */}
+        <section className="guide-section">
+          <h2 className="section-title">Componente How It Works</h2>
+          <p className="section-description">
+            Componente reutilizable que muestra los pasos del proceso en un diseño horizontal con iconos SVG, 
+            línea conectora y animaciones de entrada. Ideal para explicar procesos de 3-4 pasos.
+          </p>
+          <div className="component-demo">
+            <HowItWorks />
+          </div>
+          <div className="component-usage">
+            <h3>Características</h3>
+            <ul className="feature-list-guide">
+              <li>✓ 4 pasos con iconos SVG personalizables</li>
+              <li>✓ Línea horizontal conectora entre pasos</li>
+              <li>✓ Badge numérico en cada paso</li>
+              <li>✓ Animaciones de entrada con Intersection Observer</li>
+              <li>✓ Efecto hover en círculos de iconos</li>
+              <li>✓ Diseño responsive (horizontal en desktop, vertical en móvil)</li>
+            </ul>
+            <h3>Uso</h3>
+            <pre className="code-block">
+{`import HowItWorks from './HowItWorks';
+
+function MyPage() {
+  return (
+    <div>
+      <HowItWorks />
+    </div>
+  );
+}`}
+            </pre>
+            <h3>Personalización</h3>
+            <p className="section-description">
+              Para personalizar los pasos, edita el array <code>steps</code> en <code>HowItWorks.tsx</code>:
+            </p>
+            <pre className="code-block">
+{`const steps = [
+  {
+    number: 1,
+    title: 'Tu título',
+    description: 'Tu descripción',
+    icon: (
+      <svg>...</svg>
+    )
+  },
+  // ... más pasos
+];`}
             </pre>
           </div>
         </section>

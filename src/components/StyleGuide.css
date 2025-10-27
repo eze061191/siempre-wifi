@@ -499,6 +499,37 @@
   font-size: 0.875rem;
 }
 
+/* Feature List */
+.feature-list-guide {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.feature-list-guide li {
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.component-usage h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000000;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.component-usage code {
+  background: #F3F4F6;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #F78700;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .style-guide-header h1 {
