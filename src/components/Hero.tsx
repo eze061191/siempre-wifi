@@ -3,6 +3,7 @@ import './Hero.css';
 import { getCountryCode } from '../utils/countryFlags';
 
 function Hero() {
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [filteredDestinations, setFilteredDestinations] = useState([]);
@@ -61,7 +62,7 @@ function Hero() {
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-
+    setSelectedIndex(-1);
     if (query.trim() === '') {
       setFilteredDestinations([]);
       setShowSuggestions(false);
@@ -75,8 +76,9 @@ function Hero() {
   };
 
   const handleSelectDestination = (destination) => {
-    setSearchQuery(destination);
-    setShowSuggestions(false);
+  setSearchQuery(destination);
+  setShowSuggestions(false);
+  setSelectedIndex(-1);
   };
 
   // Calendar functions
@@ -220,16 +222,32 @@ function Hero() {
                       onChange={handleSearchChange}
                       onFocus={() => searchQuery && setShowSuggestions(true)}
                       onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                      onKeyDown={(e) => {
+                        if (!showSuggestions || filteredDestinations.length === 0) return;
+                        if (e.key === 'ArrowDown') {
+                          setSelectedIndex((prev) => (prev < filteredDestinations.length - 1 ? prev + 1 : 0));
+                          e.preventDefault();
+                        } else if (e.key === 'ArrowUp') {
+                          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : filteredDestinations.length - 1));
+                          e.preventDefault();
+                        } else if (e.key === 'Enter' && selectedIndex >= 0) {
+                          handleSelectDestination(filteredDestinations[selectedIndex]);
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </div>
                   {showSuggestions && filteredDestinations.length > 0 && (
                     <div className="suggestions-dropdown">
                       {filteredDestinations.map((destination, index) => {
                         const countryCode = getCountryCode(destination);
+                        const isSelected = index === selectedIndex;
                         return (
                           <div
                             key={index}
-                            className="suggestion-item"
+                            className={`suggestion-item${isSelected ? ' selected' : ''}`}
+                            style={isSelected ? { background: '#ffe7c2' } : {}}
+                            onMouseEnter={() => setSelectedIndex(index)}
                             onClick={() => handleSelectDestination(destination)}
                           >
                             <span className="suggestion-icon">

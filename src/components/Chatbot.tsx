@@ -340,4 +340,15 @@ function Chatbot() {
   );
 }
 
+// Fix para TypeScript: declarar la propiedad 'env' en ImportMeta
+
+declare global {
+  interface ImportMeta {
+    env: {
+      VITE_GEMINI_API_KEY: string;
+      // Puedes agregar otras variables si las necesitas
+    };
+  }
+}
+
 export default Chatbot;
