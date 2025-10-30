@@ -20,9 +20,10 @@
 }
 
 .steps-container {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  /* Usar grid para que el componente HowItWorks tenga el mismo
+     diseño de tarjetas que la sección Benefits */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -30,40 +31,42 @@
   padding: 0 2rem;
 }
 
-/* Línea horizontal conectora */
+/* Ocultamos la línea conectora porque la presentación en tarjetas
+   comparte el mismo look que Benefits (cards en grid) */
 .steps-line {
-  position: absolute;
-  top: 50px;
-  left: 15%;
-  right: 15%;
-  height: 2px;
-  background: #E5E7EB;
-  z-index: 0;
+  display: none;
 }
 
 .step-item {
-  flex: 1;
-  text-align: center;
-  position: relative;
-  z-index: 1;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  background: #FFFFFF;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #E5E7EB;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.step-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #F78700;
 }
 
 .step-icon-wrapper {
-  position: relative;
   margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Badge con número */
+/* Badge numeric is still available but visually optional; positioning kept */
 .step-number-badge {
   position: absolute;
   top: -8px;
-  right: calc(50% - 50px);
+  right: calc(50% - 35px);
   width: 28px;
   height: 28px;
   background: #F78700;
@@ -78,12 +81,11 @@
   box-shadow: 0 2px 8px rgba(247, 135, 0, 0.3);
 }
 
-/* Círculo con icono */
 .step-icon-circle {
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   background: #FFFFFF;
-  border: 3px solid #F78700;
+  border: 2px solid #F78700;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -94,15 +96,14 @@
 }
 
 .step-icon-circle svg {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   stroke: #F78700;
 }
 
 .step-item:hover .step-icon-circle {
   background: #F78700;
   transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(247, 135, 0, 0.3);
 }
 
 .step-item:hover .step-icon-circle svg {

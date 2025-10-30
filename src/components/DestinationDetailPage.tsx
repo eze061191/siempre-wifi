@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import './DestinationDetailPage.css';
 import Navbar from './Navbar';
-import Footer from './Footer';
 import FAQ from './FAQ';
-import { DestinationDetailPageProps } from '../types';
-
-function DestinationDetailPage({ destination = 'España', bookingData }: DestinationDetailPageProps) {
+import HowItWorks from './HowItWorks';
+import Footer from './Footer';
+function DestinationDetailPage({ destination = 'España', bookingData }: { destination?: string; bookingData?: any }) {
   const [activeTab, setActiveTab] = useState<string>('detalles');
   const [startDate, setStartDate] = useState<Date | null>(bookingData?.startDate || null);
   const [endDate, setEndDate] = useState<Date | null>(bookingData?.endDate || null);
@@ -23,7 +22,9 @@ function DestinationDetailPage({ destination = 'España', bookingData }: Destina
       
       if (rightColumn && imageCard) {
         const rightHeight = rightColumn.getBoundingClientRect().height;
-        (imageCard as HTMLElement).style.height = `${rightHeight}px`;
+        // Use maxHeight instead of forcing an explicit height so the image
+        // can stay within bounds without stretching layouts unexpectedly.
+        (imageCard as HTMLElement).style.maxHeight = `${rightHeight}px`;
       }
     };
 
@@ -62,6 +63,67 @@ function DestinationDetailPage({ destination = 'España', bookingData }: Destina
       icon: '🔒',
       title: 'Conexión segura',
       description: 'Navega con total seguridad y privacidad en redes confiables'
+    }
+  ];
+
+  const detailEsimSteps = [
+    {
+      title: 'Selecciona destino y duración',
+      description: 'Elige tu destino y la duración de tu viaje para adquirir tu eSIM. Confirma que tu teléfono sea compatible con la eSIM.',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="6" y="2" width="12" height="20" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+          <circle cx="12" cy="18" r="0.9" fill="currentColor" />
+        </svg>
+      )
+    },
+    {
+      title: 'Recibe eSIM por email',
+      description: 'Recibirás por email el código QR y las instrucciones para la instalación automática o manual.',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+          <path d="M3 7l9 6 9-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )
+    },
+    {
+      title: 'Escanea o instala',
+      description: 'Escanea el código QR en tu teléfono o sigue las instrucciones de la app para instalar la eSIM.',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" stroke="currentColor" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )
+    },
+    {
+      title: 'Activa en destino',
+      description: `Al llegar a ${destination}, activa tu eSIM y comienza a navegar sin configuraciones complicadas.`,
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" />
+          <path d="M2 12h20M12 2v20" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+        </svg>
+      )
+    },
+    {
+      title: 'Pagos y seguridad',
+      description: 'Procesos de pago seguros y múltiples métodos disponibles para finalizar tu compra con confianza.',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+          <rect x="6" y="9" width="4" height="2" fill="currentColor" />
+        </svg>
+      )
+    },
+    {
+      title: 'Soporte 24/7',
+      description: 'Nuestro equipo de soporte está disponible en todo momento y ofrecemos opciones de reembolso cuando aplica.',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2l7 4v5c0 5-3.5 9-7 11-3.5-2-7-6-7-11V6l7-4z" stroke="currentColor" strokeWidth="1.3" fill="none" strokeLinejoin="round" />
+        </svg>
+      )
     }
   ];
 
@@ -167,6 +229,26 @@ function DestinationDetailPage({ destination = 'España', bookingData }: Destina
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [showCalendar]);
+
+  // IntersectionObserver to animate steps on entry (like the StyleGuide HowItWorks component)
+  useEffect(() => {
+    const elems = Array.from(document.querySelectorAll('.esim-step')) as HTMLElement[];
+    if (!elems.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const el = entry.target as HTMLElement;
+        if (entry.isIntersecting) {
+          el.classList.add('in-view');
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    elems.forEach(e => observer.observe(e));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="destination-detail-page">
@@ -563,51 +645,8 @@ function DestinationDetailPage({ destination = 'España', bookingData }: Destina
         </div>
       </section>
 
-      {/* ¿Cómo funciona la eSIM? */}
-      <section className="how-esim-works-section">
-        <div className="container">
-          <h2 className="section-title-center">¿Cómo funciona la eSIM de Siempre<span className="logo-highlight">WiFi</span> para {destination}?</h2>
-          <div className="esim-steps-grid">
-            <div className="esim-step">
-              <div className="esim-step-image">📱</div>
-              <div className="esim-step-content">
-                <span className="esim-step-number">01.</span>
-                <p className="esim-step-text">
-                  Elige tu destino y la duración de tu viaje para adquirir tu eSIM con datos móviles. Asegúrate de confirmar que tu teléfono sea compatible con esta tecnología.
-                </p>
-                <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="esim-step-link">Verifica compatibilidad →</button>
-              </div>
-            </div>
-            <div className="esim-step">
-              <div className="esim-step-image">📧</div>
-              <div className="esim-step-content">
-                <span className="esim-step-number">02.</span>
-                <p className="esim-step-text">
-                  Previo a tu partida, configura tu eSIM de forma automática mediante la aplicación o utiliza el código QR y las instrucciones manuales que recibirás por email.
-                </p>
-              </div>
-            </div>
-            <div className="esim-step">
-              <div className="esim-step-image">✈️</div>
-              <div className="esim-step-content">
-                <span className="esim-step-number">03.</span>
-                <p className="esim-step-text">
-                  Al llegar a {destination}, activa tu eSIM Siempre<span className="logo-highlight">WiFi</span> y comienza a disfrutar de la conectividad ilimitada incluida en tu plan de datos.
-                </p>
-              </div>
-            </div>
-            <div className="esim-step">
-              <div className="esim-step-image">🌍</div>
-              <div className="esim-step-content">
-                <span className="esim-step-number">04.</span>
-                <p className="esim-step-text">
-                  Administra tu plan desde nuestra aplicación móvil o accede al Centro Siempre<span className="logo-highlight">WiFi</span>, nuestra plataforma web donde puedes gestionar todos los aspectos de tu eSIM.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Reusable HowItWorks component (replaces inline markup) */}
+      <HowItWorks destination={destination} steps={detailEsimSteps} showNumbers={false} />
 
       {/* Ventajas de usar la eSIM */}
       <section className="advantages-section">

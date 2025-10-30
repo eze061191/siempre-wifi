@@ -1,4 +1,3 @@
-import React from 'react';
 import './FeatureHighlight.css';
 
 function FeatureHighlight() {
@@ -44,7 +43,7 @@ function FeatureHighlight() {
               alt="Conectividad global al alcance de tu mano - Siempre WiFi" 
               className="feature-main-image"
               onError={(e) => {
-                e.target.style.display = 'none';
+                (e.currentTarget as HTMLElement).style.display = 'none';
                 console.log('Imagen feature no encontrada. Por favor, guarda conectividad-global.jpg en public/images/');
               }}
             />

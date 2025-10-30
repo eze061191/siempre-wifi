@@ -47,23 +47,3 @@ export interface CalendarMonth {
 }
 
 // Component Props types
-export interface NavbarProps {
-  className?: string;
-}
-
-export interface HeroProps {
-  className?: string;
-}
-
-export interface DestinationDetailPageProps {
-  destination?: string;
-  bookingData?: BookingData;
-}
-
-export interface FooterProps {
-  className?: string;
-}
-
-export interface DestinationsPageProps {
-  className?: string;
-}

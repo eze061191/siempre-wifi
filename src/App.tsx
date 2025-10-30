@@ -16,7 +16,7 @@ import StyleGuide from './components/StyleGuide';
 import DestinationPage from './components/DestinationPage';
 import DestinationsPage from './components/DestinationsPage';
 import DestinationDetailPage from './components/DestinationDetailPage';
-// import Chatbot from './components/Chatbot'; // DESACTIVADO - Ver CHATBOT-BACKUP.md para restaurar
+import Chatbot from './components/Chatbot';
 import { BookingData } from './types';
 
 // Extend Window interface for global navigation functions
@@ -151,9 +151,8 @@ function App() {
         </>
       )}
       
-      {/* Chatbot disponible en todas las páginas excepto StyleGuide */}
-      {/* CHATBOT DESACTIVADO - Descomentar la siguiente línea para reactivar */}
-      {/* {!showStyleGuide && <Chatbot />} */}
+  {/* Chatbot disponible en todas las páginas */}
+  <Chatbot />
     </div>
   );
 }

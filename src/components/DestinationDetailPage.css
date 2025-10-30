@@ -5,7 +5,6 @@
   overflow-x: hidden;
   width: 100%;
 }
-
 /* Hero Section */
 .detail-hero {
   padding: 8rem 0 4rem;
@@ -34,10 +33,6 @@
   border-radius: 12px;
   padding: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
 }
 
 .destination-flag-large {
@@ -278,19 +273,6 @@
   font-weight: 600;
   color: #6B7280;
 }
-
-.selector-group {
-  margin-bottom: 0.5rem;
-}
-
-.selector-label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #000000;
-  margin-bottom: 0.25rem;
-}
-
 .selector-hint {
   font-size: 0.75rem;
   color: #6B7280;
@@ -377,13 +359,14 @@
   font-size: 1.5rem;
   color: #6B7280;
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
 }
 
-.calendar-nav:hover {
-  background: #F3F4F6;
-  color: #F78700;
+.selector-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 0.25rem;
 }
 
 .calendar-months-container {
@@ -801,9 +784,12 @@
 }
 
 .app-logo {
-  width: 100%;
-  height: 100%;
+  width: 40px;
+  height: 40px;
+  max-width: 100%;
+  max-height: 40px;
   object-fit: contain;
+  display: inline-block;
 }
 
 .uber-box {
@@ -826,68 +812,9 @@
   color: #EA4335;
 }
 
-/* How eSIM Works Section */
-.how-esim-works-section {
-  padding: 4rem 0;
-  background: #F9FAFB;
-}
-
-.esim-steps-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.esim-step {
-  display: flex;
-  gap: 1.5rem;
-  background: #FFFFFF;
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid #E5E7EB;
-}
-
-.esim-step-image {
-  font-size: 3rem;
-  flex-shrink: 0;
-}
-
-.esim-step-content {
-  flex: 1;
-}
-
-.esim-step-number {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #F78700;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.esim-step-text {
-  font-size: 0.9375rem;
-  color: #374151;
-  line-height: 1.6;
-  margin: 0 0 0.75rem 0;
-}
-
-.esim-step-link {
-  font-size: 0.875rem;
-  color: #F78700;
-  text-decoration: none;
-  font-weight: 600;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.esim-step-link:hover {
-  text-decoration: underline;
-}
+/* Los estilos de la sección 'Cómo funciona' se centralizaron en
+   `src/components/HowItWorks.css`. Mantener estos estilos aquí
+   crea duplicación. */
 
 /* Advantages Section */
 .advantages-section {
@@ -1482,24 +1409,7 @@
     height: 28px;
   }
 
-  .esim-steps-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .esim-step {
-    flex-direction: column;
-    padding: 1.5rem;
-    gap: 1rem;
-  }
-
-  .esim-step-image {
-    font-size: 2.5rem;
-  }
-
-  .esim-step-number {
-    font-size: 1.25rem;
-  }
+  /* how-it-works responsive rules moved to HowItWorks.css */
 
   .advantages-hero {
     flex-direction: column;
@@ -1781,3 +1691,41 @@
     font-size: 1.25rem;
   }
 }
+
+/* Safety constraints: prevent unexpectedly large images or SVGs from
+   breaking the detail page layout. These are defensive rules in case
+   other styles or inline scripts force very large dimensions. */
+.destination-image-card {
+  /* don't allow the image card to grow beyond a sane size */
+  max-height: 900px;
+  overflow: hidden;
+}
+
+.destination-hero-image {
+  width: 100%;
+  height: auto; /* allow natural aspect ratio */
+  max-height: 900px;
+  object-fit: cover;
+  display: block;
+}
+
+.connection-logo,
+.app-logo,
+.payment-logo {
+  max-width: 48px;
+  max-height: 48px;
+  width: auto;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.connection-icon-wrapper svg,
+.app-icon-box svg,
+.payment-logos img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+

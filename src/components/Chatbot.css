@@ -330,6 +330,7 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   background: #F9FAFB;
+  justify-content: flex-end;
 }
 
 .quick-reply-btn {

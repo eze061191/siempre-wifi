@@ -1,8 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import './HowItWorks.css';
 
-function HowItWorks() {
-  const stepsRef = useRef([]);
+type Step = {
+  number?: number;
+  title: string;
+  description: string;
+  icon?: React.ReactNode;
+};
+
+type HowItWorksProps = {
+  destination?: string;
+  steps?: Step[];
+  showNumbers?: boolean; // whether to show numeric badges
+};
+
+function HowItWorks({ destination, steps: stepsProp, showNumbers = false }: HowItWorksProps) {
+  const stepsRef = useRef<any[]>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -24,7 +37,7 @@ function HowItWorks() {
     return () => observer.disconnect();
   }, []);
 
-  const steps = [
+  const defaultSteps: Step[] = [
     {
       number: 1,
       title: 'Elige tu destino y plan',
@@ -72,12 +85,14 @@ function HowItWorks() {
     }
   ];
 
+  const steps: Step[] = stepsProp && stepsProp.length ? stepsProp : defaultSteps;
+
   return (
     <section className="how-it-works">
       <div className="container">
         <div className="section-header">
-          <h2>Conectarte es así de fácil</h2>
-          <p>En solo 4 simples pasos estarás conectado en cualquier parte del mundo.</p>
+          <h2>{destination ? `¿Cómo funciona la eSIM de SiempreWiFi para ${destination}?` : 'Conectarte es así de fácil'}</h2>
+          <p>{destination ? 'Sigue estos pasos para activar tu eSIM' : 'En solo 4 simples pasos estarás conectado en cualquier parte del mundo.'}</p>
         </div>
         <div className="steps-container">
           <div className="steps-line"></div>
@@ -88,7 +103,7 @@ function HowItWorks() {
               ref={(el) => (stepsRef.current[index] = el)}
             >
               <div className="step-icon-wrapper">
-                <div className="step-number-badge">{step.number}</div>
+                {showNumbers && <div className="step-number-badge">{step.number}</div>}
                 <div className="step-icon-circle">
                   {step.icon}
                 </div>

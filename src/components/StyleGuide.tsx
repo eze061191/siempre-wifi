@@ -344,14 +344,21 @@ function MyPage() {
             línea conectora y animaciones de entrada. Ideal para explicar procesos de 3-4 pasos.
           </p>
           <div className="component-demo">
-            <HowItWorks />
+            <div style={{ marginBottom: '1.5rem' }}>
+              <h4>Demo (badges ON)</h4>
+              <HowItWorks showNumbers={true} />
+            </div>
+            <div>
+              <h4>Demo (custom destination)</h4>
+              <HowItWorks destination="México" showNumbers={false} />
+            </div>
           </div>
           <div className="component-usage">
             <h3>Características</h3>
             <ul className="feature-list-guide">
               <li>✓ 4 pasos con iconos SVG personalizables</li>
               <li>✓ Línea horizontal conectora entre pasos</li>
-              <li>✓ Badge numérico en cada paso</li>
+              <li>✓ Badge numérico en cada paso (opcional via <code>showNumbers</code>)</li>
               <li>✓ Animaciones de entrada con Intersection Observer</li>
               <li>✓ Efecto hover en círculos de iconos</li>
               <li>✓ Diseño responsive (horizontal en desktop, vertical en móvil)</li>
@@ -363,7 +370,7 @@ function MyPage() {
 function MyPage() {
   return (
     <div>
-      <HowItWorks />
+      <HowItWorks destination="México" showNumbers={false} />
     </div>
   );
 }`}

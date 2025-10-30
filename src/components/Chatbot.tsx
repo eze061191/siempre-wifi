@@ -175,17 +175,76 @@ function Chatbot() {
     }
   };
 
-  const quickReplies = [
+  // FAQs y opción fija
+  // Opciones importantes y relevantes
+  const FAQ_QUICK_REPLIES = [
     '¿Qué es una eSIM?',
     '¿Cómo funciona?',
+    '¿Cuánto cuesta?',
     'Ver planes',
-    'Países disponibles'
+    'Países disponibles',
+    'Hablar con un asesor'
   ];
+  const [quickReplies, setQuickReplies] = useState<string[]>(FAQ_QUICK_REPLIES);
 
   const handleQuickReply = (reply: string) => {
     setInputValue(reply);
     setTimeout(() => sendMessage(), 100);
   };
+
+  // Actualizar opciones según la respuesta del bot
+  useEffect(() => {
+    if (messages.length > 1) {
+      const lastBotMsg = [...messages].reverse().find(m => m.sender === 'bot');
+      if (lastBotMsg) {
+        const text = lastBotMsg.text.toLowerCase();
+        let dynamicReplies = [];
+        if (text.includes('eSIM') || text.includes('tarjeta SIM digital')) {
+          dynamicReplies = [
+            '¿Cómo funciona?',
+            '¿Cuánto cuesta?',
+            'Ver planes',
+            'Países disponibles',
+            'Hablar con un asesor'
+          ];
+        } else if (text.includes('plan') && text.includes('activar')) {
+          dynamicReplies = [
+            '¿Cuándo se activa mi plan?',
+            '¿Qué incluyen los planes?',
+            '¿Cuánto cuesta?',
+            'Hablar con un asesor'
+          ];
+        } else if (text.includes('compatible')) {
+          dynamicReplies = [
+            '¿Mi teléfono es compatible?',
+            '¿Cómo funciona?',
+            'Hablar con un asesor'
+          ];
+        } else if (text.includes('precio') || text.includes('$')) {
+          dynamicReplies = [
+            '¿Cuánto cuesta?',
+            'Ver planes',
+            'Países disponibles',
+            'Hablar con un asesor'
+          ];
+        } else if (text.includes('soporte') || text.includes('problema')) {
+          dynamicReplies = [
+            '¿Qué pasa si tengo problemas?',
+            'Hablar con un asesor'
+          ];
+        } else {
+          dynamicReplies = FAQ_QUICK_REPLIES;
+        }
+        // Limitar a máximo 6 opciones y asegurar 'Hablar con un asesor'
+        if (!dynamicReplies.includes('Hablar con un asesor')) {
+          dynamicReplies.push('Hablar con un asesor');
+        }
+        setQuickReplies(dynamicReplies.slice(0, 6));
+      }
+    } else {
+      setQuickReplies(FAQ_QUICK_REPLIES);
+    }
+  }, [messages]);
 
   const clearHistory = () => {
     setMessages([
@@ -296,20 +355,18 @@ function Chatbot() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Replies */}
-          {messages.length <= 2 && (
-            <div className="chatbot-quick-replies">
-              {quickReplies.map((reply, index) => (
-                <button
-                  key={index}
-                  className="quick-reply-btn"
-                  onClick={() => handleQuickReply(reply)}
-                >
-                  {reply}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* Quick Replies SIEMPRE visibles debajo del input */}
+          <div className="chatbot-quick-replies">
+            {quickReplies.map((reply, index) => (
+              <button
+                key={index}
+                className="quick-reply-btn"
+                onClick={() => handleQuickReply(reply)}
+              >
+                {reply}
+              </button>
+            ))}
+          </div>
 
           {/* Input */}
           <div className="chatbot-input-container">

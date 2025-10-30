@@ -12,7 +12,8 @@ function ImageShowcase() {
               alt="5 amigos conectados a un wifi para todos sus viajes" 
               className="showcase-main-image"
               onError={(e) => {
-                e.target.style.display = 'none';
+                // e.target is EventTarget by default; narrow to HTMLImageElement for TS
+                (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
           </div>
