@@ -5,6 +5,11 @@ type Benefit = {
   title: string;
   description: string;
   icon: React.ReactNode;
+  cta?: {
+    label: string;
+    href?: string;
+    onClick?: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
+  };
 };
 
 type BenefitsSectionProps = {
@@ -127,6 +132,20 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({ benefits, title, subt
               <div className="benefit-icon-circle">{item.icon}</div>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
+              {item.cta && (
+                <a
+                  className="benefit-cta-link"
+                  href={item.cta.href || '#'}
+                  onClick={(e) => {
+                    if (item.cta?.onClick) {
+                      e.preventDefault();
+                      item.cta.onClick(e);
+                    }
+                  }}
+                >
+                  {item.cta.label}
+                </a>
+              )}
             </div>
           ))}
         </div>

@@ -100,6 +100,21 @@
   line-height: 1.6;
 }
 
+/* CTA como enlace de texto (no botón) */
+.benefit-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: #F78700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.benefit-cta-link:hover {
+  color: #cf6d00; /* tono más oscuro al hover */
+}
+
 /* Estandarización de íconos en Benefits */
 .benefit-icon-circle svg * {
   stroke: currentColor;

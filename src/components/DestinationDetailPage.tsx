@@ -5,6 +5,7 @@ import FAQ from './FAQ';
 import HowItWorks from './HowItWorks';
 import BenefitsSection from './BenefitsSection';
 import Footer from './Footer';
+import EsimCompatibilityModal from './EsimCompatibilityModal';
 function DestinationDetailPage({ destination = 'España', bookingData }: { destination?: string; bookingData?: any }) {
   const [activeTab, setActiveTab] = useState<string>('detalles');
   const [startDate, setStartDate] = useState<Date | null>(bookingData?.startDate || null);
@@ -14,6 +15,7 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
   const [quantity, setQuantity] = useState<number>(1);
   const [basePrice, setBasePrice] = useState<number>(bookingData?.price || 0);
   const [selectedSimType, setSelectedSimType] = useState<string>('esim');
+  const [showCompatibilityModal, setShowCompatibilityModal] = useState<boolean>(false);
 
   // Adjust image height to match right column
   useEffect(() => {
@@ -78,7 +80,12 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
           <polyline points="9 22 9 12 15 12 15 22" />
         </svg>
-      )
+      ),
+      cta: {
+        label: 'Verificar compatibilidad',
+        href: '#compatibilidad',
+        onClick: () => setShowCompatibilityModal(true)
+      }
     },
     {
       title: 'Instala tu eSIM antes del viaje',
@@ -295,7 +302,7 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
                   </div>
                 </div>
                 <div className="tabs-right">
-                  <button className="btn-verify-compatibility">
+                  <button className="btn-verify-compatibility" onClick={() => setShowCompatibilityModal(true)}>
                     Verificar compatibilidad
                     <svg
                       className="verify-icon"
@@ -645,6 +652,12 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
         title={`¿Cómo funciona la eSIM de SiempreWiFi para ${destination}?`}
         subtitle=""
         benefits={howItWorksBenefits}
+      />
+
+      {/* Modal Compatibilidad eSIM */}
+      <EsimCompatibilityModal
+        open={showCompatibilityModal}
+        onClose={() => setShowCompatibilityModal(false)}
       />
 
       {/* Ventajas de usar la eSIM */}
