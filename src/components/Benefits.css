@@ -70,6 +70,7 @@
   width: 32px;
   height: 32px;
   stroke: #F78700;
+  stroke-width: 2px;
 }
 
 .benefit-card:hover .benefit-icon-circle {

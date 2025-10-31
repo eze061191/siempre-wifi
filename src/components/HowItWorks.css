@@ -20,22 +20,14 @@
 }
 
 .steps-container {
-  /* Usar grid para que el componente HowItWorks tenga el mismo
-     diseño de tarjetas que la sección Benefits */
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
   position: relative;
-  padding: 0 2rem;
 }
 
-/* Ocultamos la línea conectora porque la presentación en tarjetas
-   comparte el mismo look que Benefits (cards en grid) */
-.steps-line {
-  display: none;
-}
+/* Línea decorativa (no visible en diseño original) */
+.steps-line { display: none; }
 
 .step-item {
   padding: 2.5rem 2rem;
@@ -49,59 +41,39 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.step-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border-color: #F78700;
+/* Contenedor del icono en variante original */
+.step-icon-wrapper {
+  position: relative;
+  margin-bottom: 1rem;
+}
+.step-media { flex: 0 0 auto; }
+
+.step-icon-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #F78700;
+  color: #F78700;
+  transition: all 0.3s ease;
 }
 
-.step-icon-wrapper {
-  margin-bottom: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative; /* para posicionar correctamente el badge numérico cuando showNumbers=true */
+/* Hover: círculo naranja e icono blanco */
+.step-item:hover .step-icon-circle,
+.step-icon-circle:hover,
+.step-item:focus-within .step-icon-circle {
+  background: #F78700;
+  color: #FFFFFF;
+  transform: scale(1.05);
 }
 
 /* Badge numeric is still available but visually optional; positioning kept */
-.step-number-badge {
-  position: absolute;
-  top: -8px;
-  right: calc(50% - 35px);
-  width: 28px;
-  height: 28px;
-  background: #F78700;
-  color: #FFFFFF;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.875rem;
-  z-index: 2;
-  box-shadow: 0 2px 8px rgba(247, 135, 0, 0.3);
-}
-
-.step-icon-circle {
-  width: 70px;
-  height: 70px;
-  background: #FFFFFF;
-  border: 2px solid #F78700;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #F78700; /* base color for SVG via currentColor */
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(247, 135, 0, 0.15);
-}
-
-.step-icon-circle svg {
-  width: 32px;
-  height: 32px;
-  stroke: currentColor; /* follow parent color so hover can flip to white */
-  transition: stroke 0.3s ease, fill 0.3s ease, color 0.3s ease;
-}
+/* Sección original no usa badge numérico visible */
+/* En el diseño original no se muestra la numeración */
+.step-number-badge { display: none; }
 
 /* Estandarización de íconos: por defecto todos los trazos siguen currentColor
    y los rellenos son transparentes, salvo que el elemento declare un fill
@@ -115,25 +87,17 @@
   fill: currentColor;
 }
 
+/* Estandarización del grosor de los íconos SVG */
+.step-icon-circle svg { width: 32px; height: 32px; }
+.step-icon-circle svg * { stroke-width: 2px; }
+
 .step-item:hover .step-icon-circle {
   background: #F78700;
   color: #FFFFFF; /* flip icon stroke/fill to white */
   transform: scale(1.05);
 }
 
-/* También responde cuando el usuario pasa el mouse sobre el círculo
-   directamente, y cuando el ítem tiene foco (accesibilidad) */
-.step-icon-circle:hover {
-  background: #F78700;
-  color: #FFFFFF;
-  transform: scale(1.05);
-}
-
-.step-item:focus-within .step-icon-circle {
-  background: #F78700;
-  color: #FFFFFF;
-  transform: scale(1.05);
-}
+/* Estados ya contemplados arriba */
 
 .step-item h3 {
   font-size: 1.125rem;
@@ -151,43 +115,61 @@
   margin: 0 auto;
 }
 
+/* Variante CARDS: estilos específicos sin afectar la guía */
+.how-it-works.variant-cards .steps-container { grid-template-columns: repeat(2, 1fr); }
+.how-it-works.variant-cards .step-item {
+  position: relative;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: left;
+}
+.how-it-works.variant-cards .step-icon-circle { width: 84px; height: 84px; }
+.how-it-works.variant-cards .step-number-badge {
+  display: inline-block;
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  padding: 0.35rem 0.6rem;
+  background: #EAF2FF;
+  color: #0F172A;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.how-it-works.variant-cards .compat-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.625rem 1rem;
+  border-radius: 10px;
+  background: #F3F4F6;
+  color: #111827;
+  border: 1px solid #E5E7EB;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.how-it-works.variant-cards .compat-button:hover { background: #FFF5E6; color: #000; transform: translateY(-1px); }
+
 /* Responsive */
 @media (max-width: 1024px) {
-  .steps-container {
-    gap: 1.5rem;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .step-icon-circle {
-    width: 80px;
-    height: 80px;
-  }
+  .steps-container { gap: 1.5rem; grid-template-columns: repeat(2, 1fr); }
+  .how-it-works.variant-cards .steps-container { grid-template-columns: 1fr; }
+  .how-it-works.variant-cards .step-icon-circle { width: 72px; height: 72px; }
 
   .step-icon-circle svg {
     width: 32px;
     height: 32px;
   }
 
-  .step-item h3 {
-    font-size: 1rem;
-  }
-
-  .step-item p {
-    font-size: 0.875rem;
-  }
+  .step-item h3 { font-size: 1rem; }
+  .step-item p { font-size: 0.875rem; }
 }
 
 @media (max-width: 768px) {
-  .steps-container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .steps-line {
-    display: none;
-  }
-
-  .step-number-badge {
-    right: calc(50% - 40px);
-  }
+  .steps-container { grid-template-columns: 1fr; gap: 2rem; }
 }

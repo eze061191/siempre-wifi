@@ -3,6 +3,7 @@ import './StyleGuide.css';
 import Navbar from './Navbar';
 import FAQ from './FAQ';
 import HowItWorks from './HowItWorks';
+import BenefitsSection from './BenefitsSection';
 
 function StyleGuide() {
   const [copiedColor, setCopiedColor] = useState('');
@@ -86,6 +87,7 @@ function StyleGuide() {
     setTimeout(() => setCopiedColor(''), 2000);
   };
 
+
   return (
     <div className="style-guide">
       <Navbar />
@@ -100,7 +102,7 @@ function StyleGuide() {
         {/* Colores */}
         <section className="guide-section">
           <h2 className="section-title">🎨 Paleta de Colores</h2>
-          
+
           <h3 className="subsection-title">Colores Primarios</h3>
           <div className="color-grid">
             {colors.primary.map((color, index) => (
@@ -151,14 +153,14 @@ function StyleGuide() {
         <section className="guide-section">
           <h2 className="section-title">📝 Tipografía</h2>
           <p className="section-description">Fuente: <strong>Inter</strong> (Google Fonts)</p>
-          
+
           <div className="typography-grid">
             {typography.map((type, index) => (
               <div key={index} className="typography-card">
-                <div className="typography-sample" style={{ 
-                  fontSize: type.size, 
+                <div className="typography-sample" style={{
+                  fontSize: type.size,
                   fontWeight: type.weight,
-                  lineHeight: type.lineHeight 
+                  lineHeight: type.lineHeight
                 }}>
                   Aa
                 </div>
@@ -263,7 +265,7 @@ function StyleGuide() {
                 <span className="btn-text">Aplicar</span>
                 <span className="btn-icon-wrapper">
                   <svg className="btn-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
               </button>
@@ -323,7 +325,7 @@ function StyleGuide() {
           <div className="component-usage">
             <h3>Uso</h3>
             <pre className="code-block">
-{`import FAQ from './FAQ';
+              {`import FAQ from './FAQ';
 
 function MyPage() {
   return (
@@ -345,13 +347,9 @@ function MyPage() {
             de Beneficios. El badge numérico es opcional.
           </p>
           <div className="component-demo">
-            <div style={{ marginBottom: '1.5rem' }}>
-              <h4>Demo (badges ON)</h4>
-              <HowItWorks showNumbers={true} />
-            </div>
             <div>
-              <h4>Demo (custom destination)</h4>
-              <HowItWorks destination="México" showNumbers={false} />
+              <h4>Demo</h4>
+              <HowItWorks />
             </div>
           </div>
           <div className="component-usage">
@@ -359,31 +357,29 @@ function MyPage() {
             <ul className="feature-list-guide">
               <li>✓ Pasos con iconos SVG personalizables</li>
               <li>✓ Diseño en tarjetas con hover y elevación (paridad con "Benefits")</li>
-              <li>✓ Badge numérico en cada paso (opcional vía <code>showNumbers</code>)</li>
-              <li>✓ Animaciones de entrada con Intersection Observer</li>
-              <li>✓ Efecto hover en círculos de iconos</li>
-              <li>✓ Diseño responsive (3 columnas en desktop, 2 en tablet, 1 en móvil)</li>
+              <li>✓ Línea conectora y animaciones suaves con <code>framer-motion</code></li>
+              <li>✓ Iconos y textos centrados para mantener jerarquía visual</li>
+              <li>✓ Diseño responsive (4 columnas en desktop, 2 en tablet, 1 en móvil)</li>
             </ul>
             <h3>Uso</h3>
             <pre className="code-block">
-{`import HowItWorks from './HowItWorks';
+              {`import HowItWorks from './HowItWorks';
 
 function MyPage() {
   return (
     <div>
-      <HowItWorks destination="México" showNumbers={false} />
+      <HowItWorks />
     </div>
   );
 }`}
             </pre>
             <h3>Personalización</h3>
             <p className="section-description">
-              Puedes pasar un array <code>steps</code> con tus propios títulos, descripciones e iconos SVG:
+              Puedes pasar un array <code>steps</code> con tus propios títulos, descripciones e iconos SVG si necesitas otro flujo:
             </p>
             <pre className="code-block">
-{`const steps = [
+              {`const steps = [
   {
-    number: 1,
     title: 'Tu título',
     description: 'Tu descripción',
     icon: (
@@ -393,7 +389,29 @@ function MyPage() {
   // ... más pasos
 ];
 
-<HowItWorks destination="Colombia" steps={steps} showNumbers={false} />`}
+<HowItWorks steps={steps} />`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="guide-section">
+          <h2 className="section-title">💡 Beneficios</h2>
+          <div className="benefits-demo">
+            <BenefitsSection />
+          </div>
+          <div className="component-usage">
+            <h3>Uso</h3>
+            <pre className="code-block">
+              {`import BenefitsSection from './BenefitsSection';
+
+function MyPage() {
+  return (
+    <div>
+      <BenefitsSection />
+    </div>
+  );
+}`}
             </pre>
           </div>
         </section>
