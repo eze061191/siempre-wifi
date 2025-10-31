@@ -340,8 +340,9 @@ function MyPage() {
         <section className="guide-section">
           <h2 className="section-title">Componente How It Works</h2>
           <p className="section-description">
-            Componente reutilizable que muestra los pasos del proceso en un diseño horizontal con iconos SVG, 
-            línea conectora y animaciones de entrada. Ideal para explicar procesos de 3-4 pasos.
+            Componente reutilizable que muestra pasos del proceso en un diseño de tarjetas (grid) con iconos SVG y
+            animaciones de entrada. Ideal para explicar procesos de 3–6 pasos, alineado visualmente con la sección
+            de Beneficios. El badge numérico es opcional.
           </p>
           <div className="component-demo">
             <div style={{ marginBottom: '1.5rem' }}>
@@ -356,12 +357,12 @@ function MyPage() {
           <div className="component-usage">
             <h3>Características</h3>
             <ul className="feature-list-guide">
-              <li>✓ 4 pasos con iconos SVG personalizables</li>
-              <li>✓ Línea horizontal conectora entre pasos</li>
-              <li>✓ Badge numérico en cada paso (opcional via <code>showNumbers</code>)</li>
+              <li>✓ Pasos con iconos SVG personalizables</li>
+              <li>✓ Diseño en tarjetas con hover y elevación (paridad con "Benefits")</li>
+              <li>✓ Badge numérico en cada paso (opcional vía <code>showNumbers</code>)</li>
               <li>✓ Animaciones de entrada con Intersection Observer</li>
               <li>✓ Efecto hover en círculos de iconos</li>
-              <li>✓ Diseño responsive (horizontal en desktop, vertical en móvil)</li>
+              <li>✓ Diseño responsive (3 columnas en desktop, 2 en tablet, 1 en móvil)</li>
             </ul>
             <h3>Uso</h3>
             <pre className="code-block">
@@ -377,7 +378,7 @@ function MyPage() {
             </pre>
             <h3>Personalización</h3>
             <p className="section-description">
-              Para personalizar los pasos, edita el array <code>steps</code> en <code>HowItWorks.tsx</code>:
+              Puedes pasar un array <code>steps</code> con tus propios títulos, descripciones e iconos SVG:
             </p>
             <pre className="code-block">
 {`const steps = [
@@ -390,7 +391,9 @@ function MyPage() {
     )
   },
   // ... más pasos
-];`}
+];
+
+<HowItWorks destination="Colombia" steps={steps} showNumbers={false} />`}
             </pre>
           </div>
         </section>

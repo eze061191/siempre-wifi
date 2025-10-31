@@ -60,6 +60,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative; /* para posicionar correctamente el badge numérico cuando showNumbers=true */
 }
 
 /* Badge numeric is still available but visually optional; positioning kept */
@@ -90,7 +91,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #F78700;
+  color: #F78700; /* base color for SVG via currentColor */
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(247, 135, 0, 0.15);
 }
@@ -98,16 +99,40 @@
 .step-icon-circle svg {
   width: 32px;
   height: 32px;
-  stroke: #F78700;
+  stroke: currentColor; /* follow parent color so hover can flip to white */
+  transition: stroke 0.3s ease, fill 0.3s ease, color 0.3s ease;
+}
+
+/* Estandarización de íconos: por defecto todos los trazos siguen currentColor
+   y los rellenos son transparentes, salvo que el elemento declare un fill
+   distinto de 'none', en cuyo caso lo forzamos a currentColor para invertir
+   automáticamente en hover (blanco sobre círculo naranja). */
+.step-icon-circle svg * {
+  stroke: currentColor;
+  fill: none;
+}
+.step-icon-circle svg [fill]:not([fill="none"]) {
+  fill: currentColor;
 }
 
 .step-item:hover .step-icon-circle {
   background: #F78700;
+  color: #FFFFFF; /* flip icon stroke/fill to white */
   transform: scale(1.05);
 }
 
-.step-item:hover .step-icon-circle svg {
-  stroke: #FFFFFF;
+/* También responde cuando el usuario pasa el mouse sobre el círculo
+   directamente, y cuando el ítem tiene foco (accesibilidad) */
+.step-icon-circle:hover {
+  background: #F78700;
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+
+.step-item:focus-within .step-icon-circle {
+  background: #F78700;
+  color: #FFFFFF;
+  transform: scale(1.05);
 }
 
 .step-item h3 {
@@ -130,6 +155,7 @@
 @media (max-width: 1024px) {
   .steps-container {
     gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .step-icon-circle {
@@ -153,17 +179,12 @@
 
 @media (max-width: 768px) {
   .steps-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
   .steps-line {
     display: none;
-  }
-
-  .step-item {
-    max-width: 300px;
   }
 
   .step-number-badge {

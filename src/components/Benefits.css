@@ -81,6 +81,10 @@
   stroke: #FFFFFF;
 }
 
+.benefit-card:hover .benefit-icon-circle {
+  color: white;
+}
+
 .benefit-card h3 {
   font-size: 1.125rem;
   font-weight: 700;
@@ -93,6 +97,16 @@
   font-size: 0.9375rem;
   color: #6B7280;
   line-height: 1.6;
+}
+
+/* Estandarización de íconos en Benefits */
+.benefit-icon-circle svg * {
+  stroke: currentColor;
+  fill: none;
+}
+
+.benefit-icon-circle svg [fill]:not([fill="none"]) {
+  fill: currentColor;
 }
 
 @media (max-width: 1024px) {

@@ -230,25 +230,7 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [showCalendar]);
 
-  // IntersectionObserver to animate steps on entry (like the StyleGuide HowItWorks component)
-  useEffect(() => {
-    const elems = Array.from(document.querySelectorAll('.esim-step')) as HTMLElement[];
-    if (!elems.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const el = entry.target as HTMLElement;
-        if (entry.isIntersecting) {
-          el.classList.add('in-view');
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    elems.forEach(e => observer.observe(e));
-
-    return () => observer.disconnect();
-  }, []);
+  // Nota: la animación de entrada ahora está gestionada por el propio componente HowItWorks.
 
   return (
     <div className="destination-detail-page">
