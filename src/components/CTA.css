@@ -1,8 +1,8 @@
 /* ===== CTA SECTION ===== */
 .cta-section {
   padding: 80px 0;
-  background: #F78700;
-  color: #FFFFFF;
+  background: var(--color-orange);
+  color: var(--color-white);
   position: relative;
   overflow: hidden;
 }
@@ -44,22 +44,22 @@
 }
 
 .cta-buttons .btn-primary {
-  background: #FFFFFF;
-  color: #F78700;
+  background: var(--color-white);
+  color: var(--color-orange);
 }
 
 .cta-buttons .btn-primary:hover {
-  background: #F3F4F6;
+  background: var(--color-gray-100);
 }
 
 .cta-buttons .btn-secondary {
-  border-color: #FFFFFF;
-  color: #FFFFFF;
+  border-color: var(--color-white);
+  color: var(--color-white);
 }
 
 .cta-buttons .btn-secondary:hover {
-  background: #FFFFFF;
-  color: #F78700;
+  background: var(--color-white);
+  color: var(--color-orange);
 }
 
 .btn-primary.large,

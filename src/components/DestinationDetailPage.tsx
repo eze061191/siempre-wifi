@@ -6,7 +6,10 @@ import HowItWorks from './HowItWorks';
 import BenefitsSection from './BenefitsSection';
 import Footer from './Footer';
 import EsimCompatibilityModal from './EsimCompatibilityModal';
-function DestinationDetailPage({ destination = 'España', bookingData }: { destination?: string; bookingData?: any }) {
+import { MONTH_NAMES_ES, formatDayMonth } from '../utils/dates';
+import { BookingData } from '../types';
+import { PRICE_PER_DAY_USD, calcDays, calcTotalPriceUSD } from '../utils/pricing';
+function DestinationDetailPage({ destination = 'España', bookingData }: { destination?: string; bookingData?: BookingData }) {
   const [activeTab, setActiveTab] = useState<string>('detalles');
   const [startDate, setStartDate] = useState<Date | null>(bookingData?.startDate || null);
   const [endDate, setEndDate] = useState<Date | null>(bookingData?.endDate || null);
@@ -148,7 +151,6 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
   // Eliminado: array local con 6 pasos personalizado (detailEsimSteps) para evitar confusiones.
 
   // Calendar functions
-  const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
@@ -176,14 +178,12 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
 
   const formatDate = (date: Date | null): string => {
     if (!date) return '';
-    const day = date.getDate();
-    const month = monthNames[date.getMonth()];
-    return `${day} ${month}`;
+    return formatDayMonth(date, MONTH_NAMES_ES);
   };
 
   const calculateDays = (): number => {
     if (startDate && endDate) {
-      return Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+      return calcDays(startDate, endDate);
     }
     return bookingData?.days || 0;
   };
@@ -198,8 +198,7 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
     }
 
     // Base price per day (you can adjust this formula)
-    const pricePerDay = 15; // $15 USD per day
-    const calculatedPrice = days * pricePerDay * quantity;
+    const calculatedPrice = calcTotalPriceUSD(days, quantity, PRICE_PER_DAY_USD);
 
     // If coming from Hero with a price, use that as base
     if (basePrice > 0 && bookingData?.startDate && bookingData?.endDate) {
@@ -212,9 +211,8 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
   // Update base price when dates change
   useEffect(() => {
     if (startDate && endDate && !bookingData?.price) {
-      const days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-      const pricePerDay = 15;
-      setBasePrice(days * pricePerDay);
+      const days = calcDays(startDate, endDate);
+      setBasePrice(calcTotalPriceUSD(days, 1, PRICE_PER_DAY_USD));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
@@ -406,7 +404,7 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
                           <div className="calendar-month-wrapper">
                             <div className="calendar-header">
                               <span className="calendar-month">
-                                {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+                                {MONTH_NAMES_ES[currentMonth.getMonth()]} {currentMonth.getFullYear()}
                               </span>
                             </div>
                             <div className="calendar-weekdays">
@@ -453,7 +451,7 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
                           <div className="calendar-month-wrapper">
                             <div className="calendar-header">
                               <span className="calendar-month">
-                                {monthNames[new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1).getMonth()]} {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1).getFullYear()}
+                                {MONTH_NAMES_ES[new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1).getMonth()]} {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1).getFullYear()}
                               </span>
                             </div>
                             <div className="calendar-weekdays">
@@ -674,44 +672,78 @@ function DestinationDetailPage({ destination = 'España', bookingData }: { desti
               <button className="advantages-hero-btn">Conoce más aquí</button>
             </div>
           </div>
-          <div className="advantages-grid">
-            <div className="advantage-card">
-              <div className="advantage-icon">💬</div>
+          <div className="advantages-grid benefits-grid">
+            <div className="advantage-card benefit-card">
+              <div className="benefit-icon-circle">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  />
+                </svg>
+              </div>
               <h3 className="advantage-title">Mantén tu número de WhatsApp</h3>
               <p className="advantage-text">
                 Sigue usando tu número de WhatsApp mientras usas tu eSIM para datos. No pierdes tu contacto con amigos y familia.
               </p>
             </div>
-            <div className="advantage-card">
-              <div className="advantage-icon">📱</div>
+            <div className="advantage-card benefit-card">
+              <div className="benefit-icon-circle">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="7" y="2" width="10" height="20" rx="2" />
+                  <line x1="12" y1="18" x2="12" y2="18" />
+                </svg>
+              </div>
               <h3 className="advantage-title">La Mejor eSIM para {destination}</h3>
               <p className="advantage-text">
                 Nuestra eSIM para {destination} te ofrece la mejor cobertura y velocidad. Disfruta de internet sin preocupaciones.
               </p>
             </div>
-            <div className="advantage-card">
-              <div className="advantage-icon">♾️</div>
+            <div className="advantage-card benefit-card">
+              <div className="benefit-icon-circle">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3.5 12c2.5-4 6.5-4 9 0 2.5 4 6.5 4 9 0" />
+                </svg>
+              </div>
               <h3 className="advantage-title">Planes de datos ilimitados</h3>
               <p className="advantage-text">
                 Olvídate de quedarte sin datos. Con nuestros planes ilimitados, navega sin límites durante todo tu viaje.
               </p>
             </div>
-            <div className="advantage-card">
-              <div className="advantage-icon">🛡️</div>
+            <div className="advantage-card benefit-card">
+              <div className="benefit-icon-circle">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 12v-1a9 9 0 0 1 18 0v1" />
+                  <path d="M21 19a3 3 0 0 1-3 3h-2v-8h2a3 3 0 0 1 3 3z" />
+                  <path d="M3 19a3 3 0 0 0 3 3h2v-8H6a3 3 0 0 0-3 3z" />
+                </svg>
+              </div>
               <h3 className="advantage-title">Soporte al cliente 24/7</h3>
               <p className="advantage-text">
                 Estamos aquí para ayudarte en cualquier momento. Nuestro equipo de soporte está disponible 24 horas al día, 7 días a la semana.
               </p>
             </div>
-            <div className="advantage-card">
-              <div className="advantage-icon">⚡</div>
+            <div className="advantage-card benefit-card">
+              <div className="benefit-icon-circle">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="13 2 3 14 10 14 9 22 19 10 12 10 13 2" />
+                </svg>
+              </div>
               <h3 className="advantage-title">Entrega inmediata</h3>
               <p className="advantage-text">
                 Recibe tu eSIM por email en menos de 2 minutos. No esperes, comienza a disfrutar de internet de inmediato.
               </p>
             </div>
-            <div className="advantage-card">
-              <div className="advantage-icon">📶</div>
+            <div className="advantage-card benefit-card">
+              <div className="benefit-icon-circle">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+                  <path d="M8.5 16.05a6.5 6.5 0 0 1 7 0" />
+                  <circle cx="12" cy="20" r="1" />
+                </svg>
+              </div>
               <h3 className="advantage-title">Comparte tus datos con familiares y amigos</h3>
               <p className="advantage-text">
                 Activa el hotspot y comparte tu conexión con tus seres queridos. Todos conectados sin costo adicional.

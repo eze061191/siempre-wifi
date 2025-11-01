@@ -18,6 +18,7 @@ import DestinationsPage from './components/DestinationsPage';
 import DestinationDetailPage from './components/DestinationDetailPage';
 import Chatbot from './components/Chatbot';
 import { BookingData } from './types';
+import AboutPage from './components/AboutPage';
 
 // Extend Window interface for global navigation functions
 declare global {
@@ -25,11 +26,12 @@ declare global {
     navigateToDestination: () => void;
     navigateToDestinations: () => void;
     navigateToDestinationDetail: (destination?: string, data?: BookingData | null) => void;
+    navigateToAbout: () => void;
     navigateToHome: () => void;
   }
 }
 
-type PageType = 'home' | 'destination' | 'destinations' | 'destinationDetail';
+type PageType = 'home' | 'destination' | 'destinations' | 'destinationDetail' | 'about';
 
 function App() {
   const [showStyleGuide, setShowStyleGuide] = useState<boolean>(false);
@@ -79,6 +81,9 @@ function App() {
       }
       setCurrentPage('destinationDetail');
     };
+    // Nueva navegación a Nosotros
+    // @ts-ignore - extendemos dinámicamente la API global
+    window.navigateToAbout = () => setCurrentPage('about');
     window.navigateToHome = () => setCurrentPage('home');
   }, []);
 
@@ -92,7 +97,7 @@ function App() {
 
       // Agregar la tecla presionada a la secuencia
       keySequence = (keySequence + e.key.toLowerCase()).slice(-20);
-      
+
       console.log('Secuencia actual:', keySequence); // Para debug
 
       // Verificar si la secuencia contiene el easter egg
@@ -130,6 +135,8 @@ function App() {
         <StyleGuide />
       ) : currentPage === 'destinationDetail' ? (
         <DestinationDetailPage destination={selectedDestination} bookingData={bookingData} />
+      ) : currentPage === 'about' ? (
+        <AboutPage />
       ) : currentPage === 'destinations' ? (
         <DestinationsPage />
       ) : currentPage === 'destination' ? (
@@ -150,9 +157,9 @@ function App() {
           <Footer />
         </>
       )}
-      
-  {/* Chatbot disponible en todas las páginas */}
-  <Chatbot />
+
+      {/* Chatbot disponible en todas las páginas */}
+      <Chatbot />
     </div>
   );
 }

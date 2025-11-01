@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './Hero.css';
 import { getCountryCode } from '../utils/countryFlags';
+import { MONTH_NAMES_ES } from '../utils/dates';
+import { PRICE_PER_DAY_USD } from '../utils/pricing';
 
 function Hero() {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [filteredDestinations, setFilteredDestinations] = useState([]);
-  
+
   const [showCalendar, setShowCalendar] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -76,9 +78,9 @@ function Hero() {
   };
 
   const handleSelectDestination = (destination) => {
-  setSearchQuery(destination);
-  setShowSuggestions(false);
-  setSelectedIndex(-1);
+    setSearchQuery(destination);
+    setShowSuggestions(false);
+    setSelectedIndex(-1);
   };
 
   // Calendar functions
@@ -89,7 +91,7 @@ function Hero() {
     const lastDay = new Date(year, month + 1, 0);
     const daysInMonth = lastDay.getDate();
     const startingDayOfWeek = firstDay.getDay();
-    
+
     return { daysInMonth, startingDayOfWeek, year, month };
   };
 
@@ -133,20 +135,17 @@ function Hero() {
   const formatDateRange = () => {
     if (!startDate) return '';
     if (!endDate) return `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`;
-    
+
     const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-    
+
     // Si los días son 0 o negativos, no mostrar nada (volver al placeholder)
     if (days <= 0) return '';
-    
-    const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
-                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-    
+
     const startDay = startDate.getDate();
-    const startMonth = monthNames[startDate.getMonth()];
+    const startMonth = MONTH_NAMES_ES[startDate.getMonth()];
     const endDay = endDate.getDate();
-    const endMonth = monthNames[endDate.getMonth()];
-    
+    const endMonth = MONTH_NAMES_ES[endDate.getMonth()];
+
     return `${startDay} ${startMonth} → ${endDay} ${endMonth} (${days} día${days !== 1 ? 's' : ''})`;
   };
 
@@ -154,8 +153,7 @@ function Hero() {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + increment, 1));
   };
 
-  const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 
-                      'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  // Meses en Español compartidos desde utils
 
   const scrollToPlans = () => {
     const plansSection = document.getElementById('planes');
@@ -175,7 +173,7 @@ function Hero() {
             <p className="hero-subtitle">
               Internet 4G LTE ilimitado desde el momento que aterrizas. Sin sorpresas, sin roaming.
             </p>
-            
+
             <div className="hero-rating">
               <div className="stars">★★★★★</div>
               <span className="rating-text">4.8/5 - Más de 15,000 viajeros conectados</span>
@@ -211,13 +209,13 @@ function Hero() {
                 <div className="input-group-wrapper">
                   <div className="input-group">
                     <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M2 10H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M10 2C12.5013 4.73835 13.9228 8.29203 14 12C13.9228 15.708 12.5013 19.2616 10 22C7.49872 19.2616 6.07725 15.708 6 12C6.07725 8.29203 7.49872 4.73835 10 2V2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M2 10H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M10 2C12.5013 4.73835 13.9228 8.29203 14 12C13.9228 15.708 12.5013 19.2616 10 22C7.49872 19.2616 6.07725 15.708 6 12C6.07725 8.29203 7.49872 4.73835 10 2V2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <input 
-                      type="text" 
-                      placeholder="¿A dónde viajas?" 
+                    <input
+                      type="text"
+                      placeholder="¿A dónde viajas?"
                       value={searchQuery}
                       onChange={handleSearchChange}
                       onFocus={() => searchQuery && setShowSuggestions(true)}
@@ -267,14 +265,14 @@ function Hero() {
                 <div className="input-group-wrapper">
                   <div className="input-group" onClick={() => setShowCalendar(true)}>
                     <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path d="M6 2V5M14 2V5M3 8H17M4 4H16C16.5523 4 17 4.44772 17 5V17C17 17.5523 16.5523 18 16 18H4C3.44772 18 3 17.5523 3 17V5C3 4.44772 3.44772 4 4 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M6 2V5M14 2V5M3 8H17M4 4H16C16.5523 4 17 4.44772 17 5V17C17 17.5523 16.5523 18 16 18H4C3.44772 18 3 17.5523 3 17V5C3 4.44772 3.44772 4 4 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <div className="date-text-hero">
                       {startDate && endDate ? (
                         <>
-                          <span>{startDate.getDate()} {['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][startDate.getMonth()]}</span>
+                          <span>{startDate.getDate()} {MONTH_NAMES_ES[startDate.getMonth()]}</span>
                           <span className="date-separator">→</span>
-                          <span>{endDate.getDate()} {['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][endDate.getMonth()]}</span>
+                          <span>{endDate.getDate()} {MONTH_NAMES_ES[endDate.getMonth()]}</span>
                           <span className="days-count">({Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24))} días)</span>
                         </>
                       ) : (
@@ -283,12 +281,12 @@ function Hero() {
                     </div>
                   </div>
                   {showCalendar && (
-                    <div 
-                      className="calendar-dropdown" 
+                    <div
+                      className="calendar-dropdown"
                       onClick={(e) => e.stopPropagation()}
                       onMouseDown={(e) => e.stopPropagation()}
                     >
-                      <button 
+                      <button
                         className="calendar-close-btn"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -316,7 +314,7 @@ function Hero() {
                         <div className="calendar-month-wrapper">
                           <div className="calendar-header">
                             <span className="calendar-month">
-                              {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+                              {MONTH_NAMES_ES[currentMonth.getMonth()]} {currentMonth.getFullYear()}
                             </span>
                           </div>
                           <div className="calendar-weekdays">
@@ -332,17 +330,17 @@ function Hero() {
                             {(() => {
                               const { daysInMonth, startingDayOfWeek, year, month } = getDaysInMonth(currentMonth);
                               const days = [];
-                              
+
                               for (let i = 0; i < startingDayOfWeek; i++) {
                                 days.push(<div key={`m1-empty-${i}`} className="calendar-day empty"></div>);
                               }
-                              
+
                               for (let day = 1; day <= daysInMonth; day++) {
                                 const date = new Date(year, month, day);
                                 const disabled = isDateDisabled(date);
                                 const selected = isDateSelected(date);
                                 const inRange = isDateInRange(date);
-                                
+
                                 days.push(
                                   <div
                                     key={`m1-${day}`}
@@ -353,17 +351,17 @@ function Hero() {
                                   </div>
                                 );
                               }
-                              
+
                               return days;
                             })()}
                           </div>
                         </div>
-                        
+
                         {/* Segundo mes */}
                         <div className="calendar-month-wrapper">
                           <div className="calendar-header">
                             <span className="calendar-month">
-                              {monthNames[new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1).getMonth()]} {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1).getFullYear()}
+                              {MONTH_NAMES_ES[new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1).getMonth()]} {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1).getFullYear()}
                             </span>
                           </div>
                           <div className="calendar-weekdays">
@@ -380,17 +378,17 @@ function Hero() {
                               const nextMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
                               const { daysInMonth, startingDayOfWeek, year, month } = getDaysInMonth(nextMonth);
                               const days = [];
-                              
+
                               for (let i = 0; i < startingDayOfWeek; i++) {
                                 days.push(<div key={`m2-empty-${i}`} className="calendar-day empty"></div>);
                               }
-                              
+
                               for (let day = 1; day <= daysInMonth; day++) {
                                 const date = new Date(year, month, day);
                                 const disabled = isDateDisabled(date);
                                 const selected = isDateSelected(date);
                                 const inRange = isDateInRange(date);
-                                
+
                                 days.push(
                                   <div
                                     key={`m2-${day}`}
@@ -401,7 +399,7 @@ function Hero() {
                                   </div>
                                 );
                               }
-                              
+
                               return days;
                             })()}
                           </div>
@@ -413,7 +411,7 @@ function Hero() {
                             <div className="summary-header">
                               <span className="summary-title">Plan de {Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24))} días</span>
                               <div className="sim-type-badges">
-                                <button 
+                                <button
                                   className="sim-badge"
                                   onClick={(e) => { e.stopPropagation(); setSimType('fisica'); setShowSimModal(true); }}
                                   title="Información sobre SIM Física"
@@ -421,7 +419,7 @@ function Hero() {
                                   <span className="badge-icon">📱</span>
                                   <span className="badge-text">SIM Física</span>
                                 </button>
-                                <button 
+                                <button
                                   className="sim-badge"
                                   onClick={(e) => { e.stopPropagation(); setSimType('esim'); setShowSimModal(true); }}
                                   title="Información sobre eSIM"
@@ -444,10 +442,9 @@ function Hero() {
                               <span className="price-label">Total:</span>
                               <span className="price-amount">${(() => {
                                 const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-                                const pricePerDay = 15;
-                                return (days * pricePerDay).toFixed(2);
+                                return (days * PRICE_PER_DAY_USD).toFixed(2);
                               })()} USD</span>
-                              <span className="price-detail">${15}/día</span>
+                              <span className="price-detail">${PRICE_PER_DAY_USD}/día</span>
                             </div>
                             {selectedSimType && (
                               <div className="summary-sim-selection">
@@ -460,7 +457,7 @@ function Hero() {
                             const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
                             const pricePerDay = 15;
                             const totalPrice = days * pricePerDay;
-                            
+
                             window.navigateToDestinationDetail(searchQuery, {
                               destination: searchQuery,
                               startDate: startDate,
@@ -472,7 +469,7 @@ function Hero() {
                             <span className="btn-text">Aplicar</span>
                             <span className="btn-icon-wrapper">
                               <svg className="btn-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                               </svg>
                             </span>
                           </button>
@@ -484,12 +481,12 @@ function Hero() {
               </div>
             </div>
           </div>
-          
+
           <div className="hero-image">
             <div className="hero-visual-new">
-              <img 
-                src="/images/conectividad-global.jpg" 
-                alt="Conectividad global Siempre WiFi" 
+              <img
+                src="/images/conectividad-global.jpg"
+                alt="Conectividad global Siempre WiFi"
                 className="hero-main-image-new"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
@@ -509,7 +506,7 @@ function Hero() {
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
-            
+
             {simType === 'fisica' ? (
               <>
                 <div className="sim-modal-header">
@@ -520,7 +517,7 @@ function Hero() {
                   <p className="sim-modal-description">
                     Tarjeta SIM tradicional que se inserta físicamente en tu dispositivo móvil.
                   </p>
-                  
+
                   <div className="sim-modal-section">
                     <h4 className="sim-section-title">✅ Ventajas</h4>
                     <ul className="sim-modal-list">
@@ -561,7 +558,7 @@ function Hero() {
                   <p className="sim-modal-description">
                     SIM digital integrada en tu dispositivo. Activación instantánea sin tarjeta física.
                   </p>
-                  
+
                   <div className="sim-modal-section">
                     <h4 className="sim-section-title">✅ Ventajas</h4>
                     <ul className="sim-modal-list">
@@ -598,10 +595,10 @@ function Hero() {
                 </div>
               </>
             )}
-            
+
             <div className="sim-modal-footer">
-              <button 
-                className="btn-modal-select" 
+              <button
+                className="btn-modal-select"
                 onClick={() => {
                   setSelectedSimType(simType);
                   setShowSimModal(false);
